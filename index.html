@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <!-- Delayed fallback: redirect to whatever URL was baked in at deploy time.
-       JS redirect (below) fires first with the dynamically-fetched latest URL. -->
   <meta http-equiv="refresh" content="5; url=https://studio-healthy-few-gaps.trycloudflare.com">
   <title>实习管理系统</title>
   <style>
@@ -37,21 +35,21 @@
       var t = '?t=' + Date.now();
       var url = null;
 
-      // Try relative url.txt first (same origin, no CORS issue, cache-busted)
+      // Source 1: jsDelivr CDN (China-accessible, purged on each push)
       try {
-        var r = await fetch('url.txt' + t);
+        var r = await fetch('https://cdn.jsdelivr.net/gh/wjingl/manager_jump@main/url.txt' + t);
         if (r.ok) url = (await r.text()).trim();
       } catch (e) {}
 
-      // Fallback: raw.githubusercontent.com (different CDN, also cache-busted)
+      // Source 2: relative url.txt (GitHub Pages, 10-min CDN cache)
       if (!url || !url.startsWith('http')) {
         try {
-          var r2 = await fetch('https://raw.githubusercontent.com/wjingl/manager_jump/main/url.txt' + t);
+          var r2 = await fetch('url.txt' + t);
           if (r2.ok) url = (await r2.text()).trim();
         } catch (e) {}
       }
 
-      if (url && url.startsWith('http')) {
+      if (url && url.startsWith('http') && url !== 'offline') {
         window.location.href = url;
       } else {
         document.body.className = 'offline';
