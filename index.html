@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="refresh" content="5; url=https://appliances-budget-aberdeen-singer.trycloudflare.com">
+  <meta http-equiv="refresh" content="0; url=https://catalogue-bloggers-trailers-reviewer.trycloudflare.com">
   <title>实习管理系统</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,38 +24,9 @@
   <div class="card">
     <div class="icon"></div>
     <h1>实习管理系统</h1>
-    <p class="status" id="msg">正在跳转，请稍候...</p>
-    <div class="spinner" id="spin"></div>
+    <p class="status">正在跳转，请稍候...<br>如未自动跳转，<a href="https://catalogue-bloggers-trailers-reviewer.trycloudflare.com">点击这里</a></p><div class="spinner"></div>
   </div>
-  <script>
-    (async function() {
-      var msg = document.getElementById('msg');
-      var spin = document.getElementById('spin');
-      var t = '?t=' + Date.now();
-      var url = null;
-
-      // Source 1: jsDelivr CDN (China-accessible, purged on each push)
-      try {
-        var r = await fetch('https://cdn.jsdelivr.net/gh/wjingl/manager_jump@main/url.txt' + t);
-        if (r.ok) url = (await r.text()).trim();
-      } catch (e) {}
-
-      // Source 2: relative url.txt (GitHub Pages — 10 min CDN cache, eventual consistency)
-      if (!url || !url.startsWith('http')) {
-        try {
-          var r2 = await fetch('url.txt' + t);
-          if (r2.ok) url = (await r2.text()).trim();
-        } catch (e) {}
-      }
-
-      if (url && url.startsWith('http') && url !== 'offline') {
-        window.location.href = url;
-      } else {
-        document.body.className = 'offline';
-        msg.innerHTML = '系统当前未启动<br>请稍后再试';
-        spin.style.display = 'none';
-      }
-    })();
-  </script>
+  <script>window.location.href="https://catalogue-bloggers-trailers-reviewer.trycloudflare.com";</script>
+  <!-- TUNNEL_URL:https://catalogue-bloggers-trailers-reviewer.trycloudflare.com -->
 </body>
 </html>
