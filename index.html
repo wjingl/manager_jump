@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=https://ftwrz-2409-894d-84e-13b7-862-fcac-4829-7998.free.pinggy.net">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Delayed fallback: redirect to whatever URL was baked in at deploy time.
+       JS redirect (below) fires first with the dynamically-fetched latest URL. -->
+  <meta http-equiv="refresh" content="5; url=https://ndoia-2409-894d-84e-13b7-862-fcac-4829-7998.run.pinggy-free.link">
   <title>实习管理系统</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,9 +27,32 @@
   <div class="card">
     <div class="icon"></div>
     <h1>实习管理系统</h1>
-    <p class="status">正在跳转，请稍候...<br>如未自动跳转，<a href="https://ftwrz-2409-894d-84e-13b7-862-fcac-4829-7998.free.pinggy.net">点击这里</a></p><div class="spinner"></div>
+    <p class="status" id="msg">正在跳转，请稍候...</p>
+    <div class="spinner" id="spin"></div>
   </div>
-  <script>window.location.href="https://ftwrz-2409-894d-84e-13b7-862-fcac-4829-7998.free.pinggy.net";</script>
-  <!-- TUNNEL_URL:https://ftwrz-2409-894d-84e-13b7-862-fcac-4829-7998.free.pinggy.net -->
+  <script>
+    (async function() {
+      var msg = document.getElementById('msg');
+      var spin = document.getElementById('spin');
+      var t = '?t=' + Date.now();
+      var url = null;
+
+      // Fetch url.txt from GitHub Pages (same origin, no CORS issue)
+      // Note: GitHub Pages caches for ~10 min, so there's a brief delay after tunnel URL changes.
+      // The meta-refresh fallback in <head> handles the transition period.
+      try {
+        var r = await fetch('url.txt' + t);
+        if (r.ok) url = (await r.text()).trim();
+      } catch (e) {}
+
+      if (url && url.startsWith('http') && url !== 'offline') {
+        window.location.href = url;
+      } else {
+        document.body.className = 'offline';
+        msg.innerHTML = '系统当前未启动<br>请稍后再试';
+        spin.style.display = 'none';
+      }
+    })();
+  </script>
 </body>
 </html>
