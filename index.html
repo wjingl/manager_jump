@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <!-- Delayed fallback: redirect to whatever URL was baked in at deploy time.
        JS redirect (below) fires first with the dynamically-fetched latest URL. -->
-  <meta http-equiv="refresh" content="5; url=https://deviant-bios-parcel-wash.trycloudflare.com">
+  <meta http-equiv="refresh" content="5; url=https://bc695c516919b8.lhr.life">
   <title>实习管理系统</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,15 +37,21 @@
       var t = '?t=' + Date.now();
       var url = null;
 
-      // Fetch url.txt from GitHub Pages (same origin, no CORS issue)
-      // Note: GitHub Pages caches for ~10 min, so there's a brief delay after tunnel URL changes.
-      // The meta-refresh fallback in <head> handles the transition period.
+      // Try relative url.txt first (same origin, no CORS issue, cache-busted)
       try {
         var r = await fetch('url.txt' + t);
         if (r.ok) url = (await r.text()).trim();
       } catch (e) {}
 
-      if (url && url.startsWith('http') && url !== 'offline') {
+      // Fallback: raw.githubusercontent.com (different CDN, also cache-busted)
+      if (!url || !url.startsWith('http')) {
+        try {
+          var r2 = await fetch('https://raw.githubusercontent.com/wjingl/manager_jump/main/url.txt' + t);
+          if (r2.ok) url = (await r2.text()).trim();
+        } catch (e) {}
+      }
+
+      if (url && url.startsWith('http')) {
         window.location.href = url;
       } else {
         document.body.className = 'offline';
